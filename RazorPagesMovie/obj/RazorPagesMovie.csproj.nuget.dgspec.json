@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj": {}
+    "c:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj": {}
   },
   "projects": {
-    "C:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj": {
+    "c:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj",
+        "projectUniqueName": "c:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj",
         "projectName": "RazorPagesMovie",
-        "projectPath": "C:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj",
+        "projectPath": "c:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj",
         "packagesPath": "C:\\Users\\fatma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\obj\\",
+        "outputPath": "c:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\fatma\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -43,6 +43,32 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
