@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj": {}
+    "C:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj": {}
   },
   "projects": {
-    "c:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj": {
+    "C:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj",
+        "projectUniqueName": "C:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj",
         "projectName": "RazorPagesMovie",
-        "projectPath": "c:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj",
+        "projectPath": "C:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\RazorPagesMovie.csproj",
         "packagesPath": "C:\\Users\\fatma\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\obj\\",
+        "outputPath": "C:\\Users\\fatma\\Desktop\\movie-db\\RazorPagesMovie\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\fatma\\AppData\\Roaming\\NuGet\\NuGet.Config"
