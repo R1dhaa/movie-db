@@ -14,7 +14,6 @@ namespace RazorPagesMovie.Pages_Movies
     public class EditModel : PageModel
     {
         private readonly RazorPagesMovie.Data.RazorPagesMovieContext _context;
-
         public EditModel(RazorPagesMovie.Data.RazorPagesMovieContext context)
         {
             _context = context;
@@ -25,7 +24,7 @@ namespace RazorPagesMovie.Pages_Movies
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Movie == null)
             {
                 return NotFound();
             }
