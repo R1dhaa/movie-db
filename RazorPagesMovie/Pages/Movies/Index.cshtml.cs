@@ -8,10 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using RazorPagesMovie.Data;
 using RazorPagesMovie.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace RazorPagesMovie.Pages_Movies
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly RazorPagesMovie.Data.RazorPagesMovieContext _context;
@@ -21,7 +23,7 @@ namespace RazorPagesMovie.Pages_Movies
             _context = context;
         }
 
-        public IList<Movie> Movie { get;set; } = default!;
+        public IList<Movie> Movie { get; set; } = default!;
 
         [BindProperty(SupportsGet = true)]
         public string? SearchString { get; set; }
@@ -30,7 +32,7 @@ namespace RazorPagesMovie.Pages_Movies
 
         [BindProperty(SupportsGet = true)]
         public string? MovieGenre { get; set; }
-       public async Task OnGetAsync()
+        public async Task OnGetAsync()
         {
             // Use LINQ to get list of genres.
             IQueryable<string> genreQuery = from m in _context.Movie
@@ -38,11 +40,11 @@ namespace RazorPagesMovie.Pages_Movies
                                             select m.Genre;
 
             var movies = from m in _context.Movie
-                        select m;
+                         select m;
 
             if (!string.IsNullOrEmpty(SearchString))
             {
-                 movies = movies.Where(s => EF.Functions.Like(s.Title, $"%{SearchString}%"));
+                movies = movies.Where(s => EF.Functions.Like(s.Title, $"%{SearchString}%"));
             }
 
             if (!string.IsNullOrEmpty(MovieGenre))
@@ -52,5 +54,5 @@ namespace RazorPagesMovie.Pages_Movies
             Genres = new SelectList(await genreQuery.Distinct().ToListAsync());
             Movie = await movies.ToListAsync();
         }
-            }
+    }
 }

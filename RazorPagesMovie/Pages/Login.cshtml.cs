@@ -1,11 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace RazorPagesMovie.Pages
 {
     public class LoginModel : PageModel
     {
+        private readonly SignInManager<IdentityUser> _signInManager;
+
+        public LoginModel(SignInManager<IdentityUser> signInManager)
+        {
+            _signInManager = signInManager;
+        }
+
         [BindProperty]
         [Required]
         public string Username { get; set; } = "";
@@ -21,18 +30,26 @@ namespace RazorPagesMovie.Pages
         {
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            // Dummy check: Replace with real authentication logic
-            if (Username == "admin" && Password == "password")
+            if (!ModelState.IsValid)
             {
-                // Redirect to home or dashboard
-                return RedirectToPage("/Movies/Index");
+                return Page();
             }
 
-            ErrorMessage = "Invalid username or password";
-            ModelState.AddModelError(string.Empty, ErrorMessage);
-            return Page();
+            var result = await _signInManager.PasswordSignInAsync(Username, Password, isPersistent: false, lockoutOnFailure: false);
+
+            if (result.Succeeded)
+            {
+                // Redirect after successful login
+                return RedirectToPage("/Movies/Index");
+            }
+            else
+            {
+                ErrorMessage = "Invalid username or password";
+                ModelState.AddModelError(string.Empty, ErrorMessage);
+                return Page();
+            }
         }
     }
 }
