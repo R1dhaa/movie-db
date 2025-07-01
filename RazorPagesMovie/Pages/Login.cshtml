@@ -4,11 +4,48 @@
     ViewData["Title"] = "Login";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
+<style>
+    body {
+        background-image: url('/images/bg.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .full-screen-center {
+        min-height: calc(100vh - 140px); /* adjust for navbar height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card {
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        border: none;
+        color: white;
+    }
+
+    .card-header {
+        background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent header */
+    }
+
+    .btn-transparent {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid white;
+    }
+
+    .btn-transparent:hover {
+        background-color: rgba(255, 255, 255, 0.4);
+        color: black;
+    }
+</style>
+
+<div class="container full-screen-center">
+    <!--<div class="row justify-content-center"> -->
         <div class="col-md-5">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header text-center">
                     <h4 class="mb-0">Sign In</h4>
                 </div>
                 <div class="card-body">
@@ -25,7 +62,7 @@
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <button type="submit" class="btn btn-transparent w-100">Login</button>
                          @if (!string.IsNullOrEmpty(Model.ErrorMessage))
                             {
                                 <p style="color:red">@Model.ErrorMessage</p>
@@ -35,7 +72,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 </div>
 
 @section Scripts {

@@ -4,40 +4,92 @@
     ViewData["Title"] = "Register";
 }
 
-<h2>Register</h2>
+<style>
+    body {
+        background-image: url('/images/bg.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
 
-<form method="post">
-    <div>
-        <label asp-for="Username"></label>
-        <input asp-for="Username" />
-        <span asp-validation-for="Username"></span>
-    </div>
-    <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" />
-        <span asp-validation-for="Password"></span>
-        <small class="form-text text-muted">
-            Password must be at least 6 characters long. Should include lowercase, uppercase, and a digit or special character.
-        </small>
-    </div>
-    <div>
-        <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" type="password" />
-        <span asp-validation-for="ConfirmPassword"></span>
-    </div>
-    <button type="submit">Register</button>
-    @if (!ViewData.ModelState.IsValid)
-    {
-        <div class="alert alert-danger mt-3">
-            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-            {
-                <div>@error.ErrorMessage</div>
-            }
+    .full-screen-center {
+        min-height: calc(100vh - 140px); /* adjust for navbar height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card {
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        border: none;
+        color: white;
+    }
+
+    .card-header {
+        background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent header */
+    }
+
+    .btn-transparent {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid white;
+    }
+
+    .btn-transparent:hover {
+        background-color: rgba(255, 255, 255, 0.4);
+        color: black;
+    }
+</style>
+
+<div class="container full-screen-center">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-header text-center">
+                <h4 class="mb-0">Register</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label asp-for="Username" class="form-label">Username</label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label">Password</label>
+                        <input asp-for="Password" type="password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <small class="form-text text-white">
+                            Password must be at least 6 characters long. Should include lowercase, uppercase, and a digit or special character.
+                        </small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+                        <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-transparent w-100">Register</button>
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger mt-3">
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <div>@error.ErrorMessage</div>
+                            }
+                        </div>
+                    }
+                </form>
+
+                <div class="text-center mt-3">
+                    <a asp-page="/Login">Back to Login</a>
+                </div>
+            </div>
         </div>
-        }
-</form>
-
-<a asp-page="/Login">Back to Login</a>
+    </div>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
