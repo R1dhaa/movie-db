@@ -20,14 +20,56 @@ namespace RazorPagesMovie.Pages.Movies
 
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(
+            string? SearchString,
+            string? MovieGenre,
+            int PageIndex = 1,
+            string exportMode = "all", // "all" or "page"
+            int PageSize = 5
+        )
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             using var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Movies");
+            
+            var query = _context.Movie.AsQueryable();
 
-            var movies = _context.Movie.ToList();
+            if (!string.IsNullOrEmpty(SearchString))
+                query = query.Where(m => m.Title.Contains(SearchString));
+
+            if (!string.IsNullOrEmpty(MovieGenre))
+                query = query.Where(m => m.Genre == MovieGenre);
+
+            // Calculate total filtered count
+            var totalCount = query.Count();
+
+            // Calculate total pages based on PageSize
+            var totalPages = (int)System.Math.Ceiling(totalCount / (double)PageSize);
+
+            if (exportMode == "page")
+            {
+                // Export only the current page
+                query = query
+                    .OrderBy(m => m.Title)
+                    .Skip((PageIndex - 1) * PageSize)
+                    .Take(PageSize);
+            }
+            else if (exportMode == "all")
+            {
+                // Export all filtered movies up to total pages (i.e. all pages currently available)
+                // So take totalPages * PageSize but not more than totalCount
+                int takeCount = totalPages * PageSize;
+                if (takeCount > totalCount)
+                    takeCount = totalCount;
+
+                query = query
+                    .OrderBy(m => m.Title)
+                    .Take(takeCount);
+            }
+
+            var movies = query.ToList();
+
 
             worksheet.Cells[1, 1].Value = "Title";
             worksheet.Cells[1, 2].Value = "Release Date";

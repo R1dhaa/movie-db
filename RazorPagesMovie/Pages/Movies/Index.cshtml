@@ -29,9 +29,28 @@
         </div>
 
         <div class="col-md-auto">
-            <button type="submit" class="btn btn-outline-secondary">Filter</button>
-            <a asp-page="Export" class="btn btn-success ms-2">Export to Excel</a>
-        </div>
+    <button type="submit" class="btn btn-outline-secondary">Filter</button>
+
+    <!-- Export All -->
+    <a class="btn btn-success ms-2"
+       asp-page="Export"
+       asp-route-SearchString="@Model.SearchString"
+       asp-route-MovieGenre="@Model.MovieGenre"
+       asp-route-exportMode="all">
+        Export All
+    </a>
+
+    <!-- Export Current Page -->
+    <a class="btn btn-warning ms-2"
+       asp-page="Export"
+       asp-route-SearchString="@Model.SearchString"
+       asp-route-MovieGenre="@Model.MovieGenre"
+       asp-route-PageIndex="@Model.PageIndex"
+       asp-route-exportMode="page">
+        Export Current Page
+    </a>
+</div>
+
     </form>
 
     <table class="table table-striped table-bordered table-hover">
