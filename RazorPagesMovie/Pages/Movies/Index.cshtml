@@ -5,144 +5,182 @@
     ViewData["Title"] = "Movie List";
 }
 
-<div class="container mt-4">
-    <h1 class="display-4 mb-3">Movie List</h1>
-
-    @if (User.IsInRole("Admin"))
-    {
-    <div class="mb-3">
-        <a class="btn btn-primary" asp-page="Create">Create New</a>
-    </div>
+<style>
+    body {
+        background-image: url('/images/bg.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
-    <form method="get" class="row g-3 align-items-end mb-4">
-        <div class="col-md-3">
-            <label asp-for="MovieGenre" class="form-label">Genre</label>
-            <select asp-for="MovieGenre" asp-items="Model.Genres" class="form-select">
-                <option value="">All</option>
-            </select>
-        </div>
+    .full-screen-center {
+        min-height: calc(100vh - 140px); /* adjust for navbar height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        <div class="col-md-4">
-            <label asp-for="SearchString" class="form-label">Title</label>
-            <input asp-for="SearchString" class="form-control" placeholder="Search by title" />
-        </div>
+    .card {
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        border: none;
+        color: white;
+    }
 
-        <div class="col-md-auto">
-    <button type="submit" class="btn btn-outline-secondary">Filter</button>
+    .card-header {
+        background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent header */
+    }
 
-    <!-- Export All -->
-    <a class="btn btn-success ms-2"
-       asp-page="Export"
-       asp-route-SearchString="@Model.SearchString"
-       asp-route-MovieGenre="@Model.MovieGenre"
-       asp-route-exportMode="all">
-        Export All
-    </a>
+    .btn-transparent {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid white;
+    }
 
-    <!-- Export Current Page -->
-    <a class="btn btn-warning ms-2"
-       asp-page="Export"
-       asp-route-SearchString="@Model.SearchString"
-       asp-route-MovieGenre="@Model.MovieGenre"
-       asp-route-PageIndex="@Model.PageIndex"
-       asp-route-exportMode="page">
-        Export Current Page
-    </a>
-</div>
+    .btn-transparent:hover {
+        background-color: rgba(255, 255, 255, 0.4);
+        color: black;
+    }
+</style>
 
-    </form>
+<div class="container full-screen-center">
+    <div class="col-md-10">
+        <div class="card shadow bg-dark bg-opacity-75 text-white">
+            <div class="card-header text-center border-0">
+                <h4 class="mb-0">Movie List</h4>
+            </div>
+            <div class="card-body">
 
-    <table class="table table-striped table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.Movie[0].Title)</th>
-                <th>@Html.DisplayNameFor(model => model.Movie[0].ReleaseDate)</th>
-                <th>@Html.DisplayNameFor(model => model.Movie[0].Genre)</th>
-                <th>@Html.DisplayNameFor(model => model.Movie[0].Price)</th>
-                <th>@Html.DisplayNameFor(model => model.Movie[0].Rating)</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model.Movie)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.Title)</td>
-                <td>@item.ReleaseDate.ToString("dd-MM-yyyy")</td>
-                <td>@Html.DisplayFor(modelItem => item.Genre)</td>
-                <td>₹ @item.Price.ToString("0.00")</td>
-                <td>@Html.DisplayFor(modelItem => item.Rating)</td>
-                <td>
                 @if (User.IsInRole("Admin"))
                 {
-                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-1">Edit</a>
-                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-info me-1">Details</a>
-                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
-                    
+                    <div class="mb-3 text-end">
+                        <a class="btn btn-primary" asp-page="Create">Create New</a>
+                    </div>
                 }
-                else
-                {
-                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
-                }
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-    <nav aria-label="Page navigation" class="mt-4">
-    <ul class="pagination justify-content-center">
 
-        <!-- Previous Button -->
-        <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
-            <a class="page-link"
-               asp-page="./Index"
-               asp-route-PageIndex="@(Model.PageIndex - 1)"
-               asp-route-SearchString="@Model.SearchString"
-               asp-route-MovieGenre="@Model.MovieGenre">
-                Previous
-            </a>
-        </li>
+                <form method="get" class="row g-3 align-items-end mb-4">
+                    <div class="col-md-3">
+                        <label asp-for="MovieGenre" class="form-label">Genre</label>
+                        <select asp-for="MovieGenre" asp-items="Model.Genres" class="form-select">
+                            <option value="">All</option>
+                        </select>
+                    </div>
 
-        <!-- Numbered Page Buttons -->
-        @{
-    var maxDisplayPages = 5;
-    var startPage = Math.Max(1, Model.PageIndex - maxDisplayPages / 2);
-    var endPage = Math.Min(Model.TotalPages, startPage + maxDisplayPages - 1);
+                    <div class="col-md-4">
+                        <label asp-for="SearchString" class="form-label">Title</label>
+                        <input asp-for="SearchString" class="form-control" placeholder="Search by title" />
+                    </div>
 
-    // Adjust startPage if near the end
-    if ((endPage - startPage) < (maxDisplayPages - 1))
-    {
-        startPage = Math.Max(1, endPage - maxDisplayPages + 1);
-    }
-}
-<!-- Numbered Page Buttons (limited to 5 visible pages) -->
-@for (var i = startPage; i <= endPage; i++)
-{
-    <li class="page-item @(i == Model.PageIndex ? "active" : "")">
-        <a class="page-link"
-           asp-page="./Index"
-           asp-route-PageIndex="@i"
-           asp-route-SearchString="@Model.SearchString"
-           asp-route-MovieGenre="@Model.MovieGenre">
-            @i
-        </a>
-    </li>
-}
+                    <div class="col-md-auto d-flex gap-2">
+                        <button type="submit" class="btn btn-outline-light">Filter</button>
 
+                        <a class="btn btn-success"
+                           asp-page="Export"
+                           asp-route-SearchString="@Model.SearchString"
+                           asp-route-MovieGenre="@Model.MovieGenre"
+                           asp-route-exportMode="all">
+                            Export All
+                        </a>
 
-        <!-- Next Button -->
-        <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
-            <a class="page-link"
-               asp-page="./Index"
-               asp-route-PageIndex="@(Model.PageIndex + 1)"
-               asp-route-SearchString="@Model.SearchString"
-               asp-route-MovieGenre="@Model.MovieGenre">
-                Next
-            </a>
-        </li>
-    </ul>
-</nav>
+                        <a class="btn btn-warning"
+                           asp-page="Export"
+                           asp-route-SearchString="@Model.SearchString"
+                           asp-route-MovieGenre="@Model.MovieGenre"
+                           asp-route-PageIndex="@Model.PageIndex"
+                           asp-route-exportMode="page">
+                            Export Current Page
+                        </a>
+                    </div>
+                </form>
 
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-dark">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">@Html.DisplayNameFor(model => model.Movie[0].Title)</th>
+                                <th style="width: 15%;">@Html.DisplayNameFor(model => model.Movie[0].ReleaseDate)</th>
+                                <th style="width: 15%;">@Html.DisplayNameFor(model => model.Movie[0].Genre)</th>
+                                <th style="width: 15%;">@Html.DisplayNameFor(model => model.Movie[0].Price)</th>
+                                <th style="width: 15%;">@Html.DisplayNameFor(model => model.Movie[0].Rating)</th>
+                                <th style="width: 15%;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Movie)
+                            {
+                                <tr>
+                                    <td style="width: 15%;">@Html.DisplayFor(modelItem => item.Title)</td>
+                                    <td style="width: 15%;">@item.ReleaseDate.ToString("dd-MM-yyyy")</td>
+                                    <td style="width: 15%;">@Html.DisplayFor(modelItem => item.Genre)</td>
+                                    <td style="width: 10%;">₹ @item.Price.ToString("0.00")</td>
+                                    <td style="width: 10%;">@Html.DisplayFor(modelItem => item.Rating)</td>
+                                    <td style="width: 30%;">
+                                        <div class="d-flex flex-row justify-content-start align-items-center gap-2 flex-wrap">
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-transparent me-1">Edit</a>
+                                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-transparent me-1">Details</a>
+                                            <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-sm btn-transparent">Delete</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-transparent">Details</a>
+                                        }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
 
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                            <a class="page-link"
+                               asp-page="./Index"
+                               asp-route-PageIndex="@(Model.PageIndex - 1)"
+                               asp-route-SearchString="@Model.SearchString"
+                               asp-route-MovieGenre="@Model.MovieGenre">
+                                Previous
+                            </a>
+                        </li>
+
+                        @{
+                            var maxDisplayPages = 5;
+                            var startPage = Math.Max(1, Model.PageIndex - maxDisplayPages / 2);
+                            var endPage = Math.Min(Model.TotalPages, startPage + maxDisplayPages - 1);
+                            if ((endPage - startPage) < (maxDisplayPages - 1))
+                            {
+                                startPage = Math.Max(1, endPage - maxDisplayPages + 1);
+                            }
+                        }
+
+                        @for (var i = startPage; i <= endPage; i++)
+                        {
+                            <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                                <a class="page-link"
+                                   asp-page="./Index"
+                                   asp-route-PageIndex="@i"
+                                   asp-route-SearchString="@Model.SearchString"
+                                   asp-route-MovieGenre="@Model.MovieGenre">
+                                    @i
+                                </a>
+                            </li>
+                        }
+
+                        <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                            <a class="page-link"
+                               asp-page="./Index"
+                               asp-route-PageIndex="@(Model.PageIndex + 1)"
+                               asp-route-SearchString="@Model.SearchString"
+                               asp-route-MovieGenre="@Model.MovieGenre">
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
 </div>
