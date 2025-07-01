@@ -1,0 +1,13 @@
+@page
+@model RazorPagesMovie.Pages.ChooseRoleModel
+@{
+    ViewData["Title"] = "Select Role";
+}
+
+<div class="text-center mt-5">
+    <h2>Login As</h2>
+    <div class="mt-4">
+        <a class="btn btn-primary btn-lg me-3" asp-page="/AdminLogin">Admin</a>
+        <a class="btn btn-success btn-lg" asp-page="/Login">User</a>
+    </div>
+</div>

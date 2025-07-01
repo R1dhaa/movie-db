@@ -18,7 +18,7 @@ namespace RazorPagesMovie.Pages
         public async Task<IActionResult> OnPostAsync()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToPage("/Login");
+            return RedirectToPage("/ChooseRole");
         }
     }
 }

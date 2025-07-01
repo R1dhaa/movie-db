@@ -11,8 +11,8 @@ using RazorPagesMovie.Data;
 namespace RazorPagesMovie.Migrations
 {
     [DbContext(typeof(RazorPagesMovieContext))]
-    [Migration("20250629084025_New_DataAnnotations")]
-    partial class New_DataAnnotations
+    [Migration("20250630114554_AddRating")]
+    partial class AddRating
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

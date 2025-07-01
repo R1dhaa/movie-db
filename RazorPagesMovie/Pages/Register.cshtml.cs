@@ -48,9 +48,9 @@ namespace RazorPagesMovie.Pages
 
             if (result.Succeeded)
             {
-                // Optionally sign in the user immediately after registration
+                await _userManager.AddToRoleAsync(user, "User");
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToPage("/Movies/Index");
+                return RedirectToPage("/Login");
             }
 
             foreach (var error in result.Errors)

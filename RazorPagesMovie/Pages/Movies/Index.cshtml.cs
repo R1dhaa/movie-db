@@ -32,6 +32,15 @@ namespace RazorPagesMovie.Pages_Movies
 
         [BindProperty(SupportsGet = true)]
         public string? MovieGenre { get; set; }
+
+         [BindProperty(SupportsGet = true)]
+        public int PageIndex { get; set; } = 1;  // current page number, default to 1
+
+        public int TotalPages { get; set; }
+        private const int PageSize = 5;  // items per page
+
+        public bool HasPreviousPage => PageIndex > 1;
+        public bool HasNextPage => PageIndex < TotalPages;
         public async Task OnGetAsync()
         {
             // Use LINQ to get list of genres.
@@ -53,6 +62,23 @@ namespace RazorPagesMovie.Pages_Movies
             }
             Genres = new SelectList(await genreQuery.Distinct().ToListAsync());
             Movie = await movies.ToListAsync();
+            int count = await movies.CountAsync();
+
+            // Calculate total pages
+            TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+
+            // Make sure PageIndex is valid
+            if (PageIndex < 1) PageIndex = 1;
+            if (PageIndex > TotalPages) PageIndex = TotalPages > 0 ? TotalPages : 1;
+
+            // Fetch only the movies for the current page
+            Movie = await movies
+                .OrderBy(m => m.Title)  // sort by title
+                .Skip((PageIndex - 1) * PageSize)
+                .Take(PageSize)
+                .ToListAsync();
         }
     }
-}
+        }
+    
+

@@ -7,10 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using OfficeOpenXml;
 
-
-
-
-
 namespace RazorPagesMovie.Pages.Movies
 {
     public class ExportModel : PageModel

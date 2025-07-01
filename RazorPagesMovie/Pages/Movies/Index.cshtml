@@ -8,9 +8,12 @@
 <div class="container mt-4">
     <h1 class="display-4 mb-3">Movie List</h1>
 
+    @if (User.IsInRole("Admin"))
+    {
     <div class="mb-3">
         <a class="btn btn-primary" asp-page="Create">Create New</a>
     </div>
+    }
 
     <form method="get" class="row g-3 align-items-end mb-4">
         <div class="col-md-3">
@@ -52,12 +55,75 @@
                 <td>₹ @item.Price.ToString("0.00")</td>
                 <td>@Html.DisplayFor(modelItem => item.Rating)</td>
                 <td>
+                @if (User.IsInRole("Admin"))
+                {
                     <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-1">Edit</a>
                     <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-info me-1">Details</a>
                     <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                    
+                }
+                else
+                {
+                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
+                }
                 </td>
             </tr>
         }
         </tbody>
     </table>
+    <nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+
+        <!-- Previous Button -->
+        <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+            <a class="page-link"
+               asp-page="./Index"
+               asp-route-PageIndex="@(Model.PageIndex - 1)"
+               asp-route-SearchString="@Model.SearchString"
+               asp-route-MovieGenre="@Model.MovieGenre">
+                Previous
+            </a>
+        </li>
+
+        <!-- Numbered Page Buttons -->
+        @{
+    var maxDisplayPages = 5;
+    var startPage = Math.Max(1, Model.PageIndex - maxDisplayPages / 2);
+    var endPage = Math.Min(Model.TotalPages, startPage + maxDisplayPages - 1);
+
+    // Adjust startPage if near the end
+    if ((endPage - startPage) < (maxDisplayPages - 1))
+    {
+        startPage = Math.Max(1, endPage - maxDisplayPages + 1);
+    }
+}
+<!-- Numbered Page Buttons (limited to 5 visible pages) -->
+@for (var i = startPage; i <= endPage; i++)
+{
+    <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+        <a class="page-link"
+           asp-page="./Index"
+           asp-route-PageIndex="@i"
+           asp-route-SearchString="@Model.SearchString"
+           asp-route-MovieGenre="@Model.MovieGenre">
+            @i
+        </a>
+    </li>
+}
+
+
+        <!-- Next Button -->
+        <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+            <a class="page-link"
+               asp-page="./Index"
+               asp-route-PageIndex="@(Model.PageIndex + 1)"
+               asp-route-SearchString="@Model.SearchString"
+               asp-route-MovieGenre="@Model.MovieGenre">
+                Next
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
 </div>
