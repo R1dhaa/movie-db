@@ -14,20 +14,20 @@
     }
 
     .full-screen-center {
-        min-height: calc(100vh - 140px); /* adjust for navbar height */
+        min-height: calc(100vh - 140px);
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
     .card {
-        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        background-color: rgba(0, 0, 0, 0.5);
         border: none;
         color: white;
     }
 
     .card-header {
-        background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent header */
+        background-color: rgba(0, 0, 0, 0.6);
     }
 
     .btn-transparent {
@@ -74,21 +74,26 @@
                         <button type="submit" class="btn btn-outline-light">Filter</button>
 
                         <a class="btn btn-success"
-                           asp-page="Export"
-                           asp-route-SearchString="@Model.SearchString"
-                           asp-route-MovieGenre="@Model.MovieGenre"
-                           asp-route-exportMode="all">
+                            asp-page="Export"
+                            asp-route-SearchString="@Model.SearchString"
+                            asp-route-MovieGenre="@Model.MovieGenre"
+                            asp-route-SortField="@Model.SortField"
+                            asp-route-SortOrder="@Model.SortOrder"
+                            asp-route-exportMode="all">
                             Export All
-                        </a>
+                            </a>
 
-                        <a class="btn btn-warning"
-                           asp-page="Export"
-                           asp-route-SearchString="@Model.SearchString"
-                           asp-route-MovieGenre="@Model.MovieGenre"
-                           asp-route-PageIndex="@Model.PageIndex"
-                           asp-route-exportMode="page">
+                            <a class="btn btn-warning"
+                            asp-page="Export"
+                            asp-route-SearchString="@Model.SearchString"
+                            asp-route-MovieGenre="@Model.MovieGenre"
+                            asp-route-PageIndex="@Model.PageIndex"
+                            asp-route-SortField="@Model.SortField"
+                            asp-route-SortOrder="@Model.SortOrder"
+                            asp-route-exportMode="page">
                             Export Current Page
-                        </a>
+                            </a>
+
                     </div>
                 </form>
 
@@ -96,35 +101,80 @@
                     <table class="table table-bordered table-hover table-dark">
                         <thead>
                             <tr>
-                                <th style="width: 25%;">@Html.DisplayNameFor(model => model.Movie[0].Title)</th>
-                                <th style="width: 15%;">@Html.DisplayNameFor(model => model.Movie[0].ReleaseDate)</th>
-                                <th style="width: 15%;">@Html.DisplayNameFor(model => model.Movie[0].Genre)</th>
-                                <th style="width: 15%;">@Html.DisplayNameFor(model => model.Movie[0].Price)</th>
-                                <th style="width: 15%;">@Html.DisplayNameFor(model => model.Movie[0].Rating)</th>
-                                <th style="width: 15%;">Actions</th>
+                                <th>
+                                    <a asp-page="./Index"
+                                       asp-route-SortField="Title"
+                                       asp-route-SortOrder="@(Model.SortField == "Title" && Model.SortOrder == "asc" ? "desc" : "asc")"
+                                       asp-route-SearchString="@Model.SearchString"
+                                       asp-route-MovieGenre="@Model.MovieGenre"
+                                       asp-route-PageIndex="1">
+                                        Title @(Model.SortField == "Title" ? (Model.SortOrder == "asc" ? "↑" : "↓") : "")
+                                    </a>
+                                </th>
+                                <th>
+                                    <a asp-page="./Index"
+                                       asp-route-SortField="ReleaseDate"
+                                       asp-route-SortOrder="@(Model.SortField == "ReleaseDate" && Model.SortOrder == "asc" ? "desc" : "asc")"
+                                       asp-route-SearchString="@Model.SearchString"
+                                       asp-route-MovieGenre="@Model.MovieGenre"
+                                       asp-route-PageIndex="1">
+                                        Release Date @(Model.SortField == "ReleaseDate" ? (Model.SortOrder == "asc" ? "↑" : "↓") : "")
+                                    </a>
+                                </th>
+                                <th>
+                                    <a asp-page="./Index"
+                                       asp-route-SortField="Genre"
+                                       asp-route-SortOrder="@(Model.SortField == "Genre" && Model.SortOrder == "asc" ? "desc" : "asc")"
+                                       asp-route-SearchString="@Model.SearchString"
+                                       asp-route-MovieGenre="@Model.MovieGenre"
+                                       asp-route-PageIndex="1">
+                                        Genre @(Model.SortField == "Genre" ? (Model.SortOrder == "asc" ? "↑" : "↓") : "")
+                                    </a>
+                                </th>
+                                <th>
+                                    <a asp-page="./Index"
+                                       asp-route-SortField="Price"
+                                       asp-route-SortOrder="@(Model.SortField == "Price" && Model.SortOrder == "asc" ? "desc" : "asc")"
+                                       asp-route-SearchString="@Model.SearchString"
+                                       asp-route-MovieGenre="@Model.MovieGenre"
+                                       asp-route-PageIndex="1">
+                                        Price @(Model.SortField == "Price" ? (Model.SortOrder == "asc" ? "↑" : "↓") : "")
+                                    </a>
+                                </th>
+                                <th>
+                                    <a asp-page="./Index"
+                                       asp-route-SortField="Rating"
+                                       asp-route-SortOrder="@(Model.SortField == "Rating" && Model.SortOrder == "asc" ? "desc" : "asc")"
+                                       asp-route-SearchString="@Model.SearchString"
+                                       asp-route-MovieGenre="@Model.MovieGenre"
+                                       asp-route-PageIndex="1">
+                                        Rating @(Model.SortField == "Rating" ? (Model.SortOrder == "asc" ? "↑" : "↓") : "")
+                                    </a>
+                                </th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model.Movie)
                             {
                                 <tr>
-                                    <td style="width: 15%;">@Html.DisplayFor(modelItem => item.Title)</td>
-                                    <td style="width: 15%;">@item.ReleaseDate.ToString("dd-MM-yyyy")</td>
-                                    <td style="width: 15%;">@Html.DisplayFor(modelItem => item.Genre)</td>
-                                    <td style="width: 10%;">₹ @item.Price.ToString("0.00")</td>
-                                    <td style="width: 10%;">@Html.DisplayFor(modelItem => item.Rating)</td>
-                                    <td style="width: 30%;">
+                                    <td>@item.Title</td>
+                                    <td>@item.ReleaseDate.ToString("dd-MM-yyyy")</td>
+                                    <td>@item.Genre</td>
+                                    <td>₹ @item.Price.ToString("0.00")</td>
+                                    <td>@item.Rating</td>
+                                    <td>
                                         <div class="d-flex flex-row justify-content-start align-items-center gap-2 flex-wrap">
-                                        @if (User.IsInRole("Admin"))
-                                        {
-                                            <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-transparent me-1">Edit</a>
-                                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-transparent me-1">Details</a>
-                                            <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-sm btn-transparent">Delete</a>
-                                        }
-                                        else
-                                        {
-                                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-transparent">Details</a>
-                                        }
+                                            @if (User.IsInRole("Admin"))
+                                            {
+                                                <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-transparent me-1">Edit</a>
+                                                <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-transparent me-1">Details</a>
+                                                <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-sm btn-transparent">Delete</a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-transparent">Details</a>
+                                            }
                                         </div>
                                     </td>
                                 </tr>
@@ -140,7 +190,9 @@
                                asp-page="./Index"
                                asp-route-PageIndex="@(Model.PageIndex - 1)"
                                asp-route-SearchString="@Model.SearchString"
-                               asp-route-MovieGenre="@Model.MovieGenre">
+                               asp-route-MovieGenre="@Model.MovieGenre"
+                               asp-route-SortField="@Model.SortField"
+                               asp-route-SortOrder="@Model.SortOrder">
                                 Previous
                             </a>
                         </li>
@@ -162,7 +214,9 @@
                                    asp-page="./Index"
                                    asp-route-PageIndex="@i"
                                    asp-route-SearchString="@Model.SearchString"
-                                   asp-route-MovieGenre="@Model.MovieGenre">
+                                   asp-route-MovieGenre="@Model.MovieGenre"
+                                   asp-route-SortField="@Model.SortField"
+                                   asp-route-SortOrder="@Model.SortOrder">
                                     @i
                                 </a>
                             </li>
@@ -173,7 +227,9 @@
                                asp-page="./Index"
                                asp-route-PageIndex="@(Model.PageIndex + 1)"
                                asp-route-SearchString="@Model.SearchString"
-                               asp-route-MovieGenre="@Model.MovieGenre">
+                               asp-route-MovieGenre="@Model.MovieGenre"
+                               asp-route-SortField="@Model.SortField"
+                               asp-route-SortOrder="@Model.SortOrder">
                                 Next
                             </a>
                         </li>

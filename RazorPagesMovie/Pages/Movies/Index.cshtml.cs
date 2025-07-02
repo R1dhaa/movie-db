@@ -35,6 +35,12 @@ namespace RazorPagesMovie.Pages_Movies
 
          [BindProperty(SupportsGet = true)]
         public int PageIndex { get; set; } = 1;  // current page number, default to 1
+        
+        [BindProperty(SupportsGet = true)]
+        public string? SortField { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? SortOrder { get; set; } = "asc"; // Default to ascending
 
         public int TotalPages { get; set; }
         private const int PageSize = 5;  // items per page
@@ -43,13 +49,27 @@ namespace RazorPagesMovie.Pages_Movies
         public bool HasNextPage => PageIndex < TotalPages;
         public async Task OnGetAsync()
         {
-            // Use LINQ to get list of genres.
+            
             IQueryable<string> genreQuery = from m in _context.Movie
                                             orderby m.Genre
                                             select m.Genre;
 
             var movies = from m in _context.Movie
                          select m;
+
+            // Apply sorting
+            movies = SortField switch
+            {
+                "Title" => SortOrder == "asc" ? movies.OrderBy(m => m.Title) : movies.OrderByDescending(m => m.Title),
+                "Genre" => SortOrder == "asc" ? movies.OrderBy(m => m.Genre) : movies.OrderByDescending(m => m.Genre),
+                "ReleaseDate" => SortOrder == "asc" ? movies.OrderBy(m => m.ReleaseDate) : movies.OrderByDescending(m => m.ReleaseDate),
+                "Price" => SortOrder == "asc"
+                    ? movies.OrderBy(m => (double)m.Price)
+                    : movies.OrderByDescending(m => (double)m.Price),
+                "Rating" => SortOrder == "asc" ? movies.OrderBy(m => m.Rating) : movies.OrderByDescending(m => m.Rating),
+                _ => movies.OrderBy(m => m.Title) // Default sort
+            };
+
 
             if (!string.IsNullOrEmpty(SearchString))
             {
@@ -73,7 +93,6 @@ namespace RazorPagesMovie.Pages_Movies
 
             // Fetch only the movies for the current page
             Movie = await movies
-                .OrderBy(m => m.Title)  // sort by title
                 .Skip((PageIndex - 1) * PageSize)
                 .Take(PageSize)
                 .ToListAsync();
