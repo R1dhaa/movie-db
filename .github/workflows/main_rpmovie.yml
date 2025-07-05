@@ -62,5 +62,6 @@ jobs:
         with:
           app-name: 'rpmovie'
           slot-name: 'Production'
-          package: .
+          package: ./RazorPagesMovie/publish
+
           
