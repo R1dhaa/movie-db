@@ -59,6 +59,9 @@ namespace RazorPagesMovie
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<RazorPagesMovieContext>();
+                context.Database.Migrate();
+
                 SeedData.Initialize(services);
                 await RoleInitializer.SeedRoles(services);       // seeds roles
                 await RoleInitializer.SeedAdminUser(services);   // seeds admin user
