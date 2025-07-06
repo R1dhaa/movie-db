@@ -4,6 +4,8 @@ using RazorPagesMovie.Models;
 using OfficeOpenXml;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace RazorPagesMovie
@@ -48,18 +50,25 @@ namespace RazorPagesMovie
 
             builder.Services.ConfigureApplicationCookie(options =>
             {
-                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Optional timeout
-    options.SlidingExpiration = false;                // Optional
-    options.Cookie.IsEssential = true;                // GDPR compliance
-    options.Cookie.HttpOnly = true;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // HTTPS only
-    options.Cookie.SameSite = SameSiteMode.Lax;
-    options.Cookie.Name = "RazorPagesMovieAuth";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Optional timeout
+                options.SlidingExpiration = false;                // Optional
+                options.Cookie.IsEssential = true;                // GDPR compliance
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // HTTPS only
+                options.Cookie.SameSite = SameSiteMode.Lax;
+                options.Cookie.Name = "RazorPagesMovieAuth";
 
-    // 👇 This makes it non-persistent
-    options.LoginPath = "/Login"; 
-    options.LogoutPath = "/Logout";
-    options.Cookie.MaxAge = null;
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnSigningIn = async ctx =>
+                    {
+                        ctx.Properties.IsPersistent = false;
+                        await Task.CompletedTask;
+                    }
+                };
+                options.LoginPath = "/Login"; 
+                options.LogoutPath = "/Logout";
+                options.Cookie.MaxAge = null;
             });
             // Add authentication & authorization
             builder.Services.AddAuthentication();
