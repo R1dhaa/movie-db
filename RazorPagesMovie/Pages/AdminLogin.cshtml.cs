@@ -38,10 +38,9 @@ namespace RazorPagesMovie.Pages
 
             var result = await _signInManager.PasswordSignInAsync(Username, Password, false, false);
             if (result.Succeeded)
-                return RedirectToPage("/Movies/Index"); // Create this admin dashboard page
-
-            ErrorMessage = "Login failed.";
-            return Page();
+                return RedirectToPage("/Movies/Index");
+                ErrorMessage = "Login failed.";
+                return Page();
         }
     }
 }

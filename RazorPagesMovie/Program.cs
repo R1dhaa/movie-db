@@ -5,7 +5,6 @@ using OfficeOpenXml;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace RazorPagesMovie
@@ -18,17 +17,15 @@ namespace RazorPagesMovie
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             builder.Services.AddRazorPages();
-                 var movieDbConnection = builder.Configuration.GetConnectionString("RazorPagesMovieContext");
+            var movieDbConnection = builder.Configuration.GetConnectionString("RazorPagesMovieContext");
             if (string.IsNullOrEmpty(movieDbConnection) || movieDbConnection.Contains("Server="))
             {
-                // fallback to SQLite file
                 var dbPath = Path.Combine(builder.Environment.ContentRootPath, "movies.db");
                 movieDbConnection = $"Data Source={dbPath}";
             }
 
             builder.Services.AddDbContext<RazorPagesMovieContext>(options =>
-                options.UseSqlite(movieDbConnection));
-
+            options.UseSqlite(movieDbConnection));
             var identityDbConnection = builder.Configuration.GetConnectionString("DefaultConnection");
             if (string.IsNullOrEmpty(identityDbConnection) || identityDbConnection.Contains("Server="))
             {
@@ -37,7 +34,7 @@ namespace RazorPagesMovie
             }
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(identityDbConnection));
+            options.UseSqlite(identityDbConnection));
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 6;
@@ -50,11 +47,11 @@ namespace RazorPagesMovie
 
             builder.Services.ConfigureApplicationCookie(options =>
             {
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Optional timeout
-                options.SlidingExpiration = false;                // Optional
-                options.Cookie.IsEssential = true;                // GDPR compliance
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.SlidingExpiration = false;
+                options.Cookie.IsEssential = true;
                 options.Cookie.HttpOnly = true;
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // HTTPS only
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.Lax;
                 options.Cookie.Name = "RazorPagesMovieAuth";
 
@@ -66,11 +63,11 @@ namespace RazorPagesMovie
                         await Task.CompletedTask;
                     }
                 };
-                options.LoginPath = "/Login"; 
+                options.LoginPath = "/Login";
                 options.LogoutPath = "/Logout";
                 options.Cookie.MaxAge = null;
             });
-            // Add authentication & authorization
+            
             builder.Services.AddAuthentication();
             builder.Services.AddAuthorization();
 
@@ -83,10 +80,8 @@ namespace RazorPagesMovie
                 context.Database.Migrate();
 
                 SeedData.Initialize(services);
-                await RoleInitializer.SeedRoles(services);       // seeds roles
-                await RoleInitializer.SeedAdminUser(services);   // seeds admin user
-
-
+                await RoleInitializer.SeedRoles(services);
+                await RoleInitializer.SeedAdminUser(services);
             }
 
             if (!app.Environment.IsDevelopment())
@@ -99,13 +94,13 @@ namespace RazorPagesMovie
             app.UseStaticFiles();
 
             app.Use(async (context, next) =>
-        {
-            if (context.User.Identity.IsAuthenticated)
             {
-                await context.SignOutAsync();
-            }
-            await next();
-        });
+                if (context.User.Identity.IsAuthenticated)
+                {
+                    await context.SignOutAsync();
+                }
+                await next();
+            });
 
             app.UseRouting();
             app.UseAuthentication();

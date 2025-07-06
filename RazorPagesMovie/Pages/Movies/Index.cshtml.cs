@@ -33,7 +33,7 @@ namespace RazorPagesMovie.Pages_Movies
         [BindProperty(SupportsGet = true)]
         public string? MovieGenre { get; set; }
 
-         [BindProperty(SupportsGet = true)]
+        [BindProperty(SupportsGet = true)]
         public int PageIndex { get; set; } = 1;  // current page number, default to 1
         
         [BindProperty(SupportsGet = true)]
@@ -49,15 +49,12 @@ namespace RazorPagesMovie.Pages_Movies
         public bool HasNextPage => PageIndex < TotalPages;
         public async Task OnGetAsync()
         {
-            
             IQueryable<string> genreQuery = from m in _context.Movie
                                             orderby m.Genre
                                             select m.Genre;
 
             var movies = from m in _context.Movie
-                         select m;
-
-            // Apply sorting
+            select m;
             movies = SortField switch
             {
                 "Title" => SortOrder == "asc" ? movies.OrderBy(m => m.Title) : movies.OrderByDescending(m => m.Title),
@@ -69,7 +66,6 @@ namespace RazorPagesMovie.Pages_Movies
                 "Rating" => SortOrder == "asc" ? movies.OrderBy(m => m.Rating) : movies.OrderByDescending(m => m.Rating),
                 _ => movies.OrderBy(m => m.Title) // Default sort
             };
-
 
             if (!string.IsNullOrEmpty(SearchString))
             {
@@ -84,20 +80,17 @@ namespace RazorPagesMovie.Pages_Movies
             Movie = await movies.ToListAsync();
             int count = await movies.CountAsync();
 
-            // Calculate total pages
             TotalPages = (int)Math.Ceiling(count / (double)PageSize);
 
-            // Make sure PageIndex is valid
             if (PageIndex < 1) PageIndex = 1;
             if (PageIndex > TotalPages) PageIndex = TotalPages > 0 ? TotalPages : 1;
 
-            // Fetch only the movies for the current page
             Movie = await movies
                 .Skip((PageIndex - 1) * PageSize)
                 .Take(PageSize)
                 .ToListAsync();
         }
     }
-        }
-    
+}
+
 

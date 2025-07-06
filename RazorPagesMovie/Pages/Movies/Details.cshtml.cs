@@ -30,11 +30,11 @@ namespace RazorPagesMovie.Pages_Movies
 
             Movie = await _context.Movie.FirstOrDefaultAsync(m => m.Id == id);
 
-             if (Movie == null)
-    {
-        return NotFound();
-    }
-    return Page();
+            if (Movie == null)
+            {
+                return NotFound();
+            }
+            return Page();
         }
     }
 }

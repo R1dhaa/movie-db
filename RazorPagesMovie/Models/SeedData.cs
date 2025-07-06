@@ -16,10 +16,9 @@ public static class SeedData
                 throw new ArgumentNullException("Null RazorPagesMovieContext");
             }
 
-            // Look for any movies.
             if (context.Movie.Any())
             {
-                return;   // DB has been seeded
+                return;
             }
 
             context.Movie.AddRange(

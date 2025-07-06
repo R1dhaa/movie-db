@@ -20,11 +20,12 @@ namespace RazorPagesMovie.Pages.Movies
             _context = context;
         }
 
-        public async Task<IActionResult> OnGetAsync(
+        public async Task<IActionResult> OnGetAsync
+        (
             string? SearchString,
             string? MovieGenre,
             int PageIndex = 1,
-            string exportMode = "all", // "all" or "page"
+            string exportMode = "all",
             int PageSize = 5,
             string? SortField = "Title",
             string? SortOrder = "asc"
@@ -37,14 +38,12 @@ namespace RazorPagesMovie.Pages.Movies
 
             var query = _context.Movie.AsQueryable();
 
-            // Apply filters
             if (!string.IsNullOrEmpty(SearchString))
                 query = query.Where(m => EF.Functions.Like(m.Title, $"%{SearchString}%"));
 
             if (!string.IsNullOrEmpty(MovieGenre))
                 query = query.Where(m => m.Genre == MovieGenre);
 
-            // Apply sorting
             query = SortField switch
             {
                 "Title" => SortOrder == "asc" ? query.OrderBy(m => m.Title) : query.OrderByDescending(m => m.Title),
@@ -55,7 +54,6 @@ namespace RazorPagesMovie.Pages.Movies
                 _ => query.OrderBy(m => m.Title)
             };
 
-            // Apply pagination if mode is 'page'
             if (exportMode == "page")
             {
                 query = query
@@ -63,17 +61,14 @@ namespace RazorPagesMovie.Pages.Movies
                     .Take(PageSize);
             }
 
-            // Execute query
             var movies = await query.ToListAsync();
 
-            // Header row
             worksheet.Cells[1, 1].Value = "Title";
             worksheet.Cells[1, 2].Value = "Release Date";
             worksheet.Cells[1, 3].Value = "Genre";
             worksheet.Cells[1, 4].Value = "Price";
             worksheet.Cells[1, 5].Value = "Rating";
 
-            // Data rows
             for (int i = 0; i < movies.Count; i++)
             {
                 var movie = movies[i];
@@ -84,10 +79,8 @@ namespace RazorPagesMovie.Pages.Movies
                 worksheet.Cells[i + 2, 5].Value = movie.Rating;
             }
 
-            // Auto-fit columns
             worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
 
-            // Stream back file
             var stream = new MemoryStream(package.GetAsByteArray());
             return File(stream,
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

@@ -41,7 +41,6 @@ namespace RazorPagesMovie.Pages
 
             if (result.Succeeded)
             {
-                // Redirect after successful login
                 return RedirectToPage("/Movies/Index");
             }
             else
