@@ -26,7 +26,6 @@ namespace RazorPagesMovie
             builder.Services.AddDbContext<RazorPagesMovieContext>(options =>
                 options.UseSqlite(movieDbConnection));
 
-            // Fix ApplicationDbContext connection string for SQLite
             var identityDbConnection = builder.Configuration.GetConnectionString("DefaultConnection");
             if (string.IsNullOrEmpty(identityDbConnection) || identityDbConnection.Contains("Server="))
             {
