@@ -48,7 +48,18 @@ namespace RazorPagesMovie
 
             builder.Services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/Login"; // redirects here if not signed in
+                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Optional timeout
+    options.SlidingExpiration = false;                // Optional
+    options.Cookie.IsEssential = true;                // GDPR compliance
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // HTTPS only
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.Name = "RazorPagesMovieAuth";
+
+    // 👇 This makes it non-persistent
+    options.LoginPath = "/Login"; 
+    options.LogoutPath = "/Logout";
+    options.Cookie.MaxAge = null;
             });
             // Add authentication & authorization
             builder.Services.AddAuthentication();
