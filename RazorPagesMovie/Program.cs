@@ -19,7 +19,7 @@ namespace RazorPagesMovie
             if (string.IsNullOrEmpty(movieDbConnection) || movieDbConnection.Contains("Server="))
             {
                 // fallback to SQLite file
-                var dbPath = Path.Combine(builder.Environment.ContentRootPath, "RazorPagesMovie.db");
+                var dbPath = Path.Combine(builder.Environment.ContentRootPath, "movies.db");
                 movieDbConnection = $"Data Source={dbPath}";
             }
 
@@ -30,7 +30,7 @@ namespace RazorPagesMovie
             var identityDbConnection = builder.Configuration.GetConnectionString("DefaultConnection");
             if (string.IsNullOrEmpty(identityDbConnection) || identityDbConnection.Contains("Server="))
             {
-                var identityDbPath = Path.Combine(builder.Environment.ContentRootPath, "Identity.db");
+                var identityDbPath = Path.Combine(builder.Environment.ContentRootPath, "identity.db");
                 identityDbConnection = $"Data Source={identityDbPath}";
             }
 
