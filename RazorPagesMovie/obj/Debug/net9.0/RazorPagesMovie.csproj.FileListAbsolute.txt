@@ -544,3 +544,15 @@ C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\refint\RazorPag
 C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\RazorPagesMovie.pdb
 C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\RazorPagesMovie.genruntimeconfig.cache
 C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\ref\RazorPagesMovie.dll
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\web.config
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\appsettings.Development.json
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\appsettings.json
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\RazorPagesMovie.deps.json
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\RazorPagesMovie.runtimeconfig.json
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\RazorPagesMovie.staticwebassets.endpoints.json
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\scriptcs_bin\Debug\net9.0\appsettings.Development.json
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\scriptcs_bin\Debug\net9.0\appsettings.json
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\scriptcs_bin\Debug\net9.0\RazorPagesMovie.deps.json
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\scriptcs_bin\Debug\net9.0\RazorPagesMovie.runtimeconfig.json
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\scriptcs_bin\Debug\net9.0\RazorPagesMovie.staticwebassets.endpoints.json
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\scriptcs_bin\Debug\net9.0\RazorPagesMovie.staticwebassets.runtime.json
