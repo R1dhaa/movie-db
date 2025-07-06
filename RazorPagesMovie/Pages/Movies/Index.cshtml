@@ -40,10 +40,11 @@
         background-color: rgba(255, 255, 255, 0.4);
         color: black;
     }
+
 </style>
 
 <div class="container full-screen-center">
-    <div class="col-md-10">
+    <div class="col-12 col-md-10">
         <div class="card shadow bg-dark bg-opacity-75 text-white">
             <div class="card-header text-center border-0">
                 <h4 class="mb-0">Movie List</h4>
@@ -58,22 +59,22 @@
                 }
 
                 <form method="get" class="row g-3 align-items-end mb-4">
-                    <div class="col-md-3">
+                    <div class="col-12 col-md-3">
                         <label asp-for="MovieGenre" class="form-label">Genre</label>
                         <select asp-for="MovieGenre" asp-items="Model.Genres" class="form-select">
                             <option value="">All</option>
                         </select>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-12 col-md-4">
                         <label asp-for="SearchString" class="form-label">Title</label>
                         <input asp-for="SearchString" class="form-control" placeholder="Search by title" />
                     </div>
 
-                    <div class="col-md-auto d-flex gap-2">
-                        <button type="submit" class="btn btn-outline-light">Filter</button>
+                    <div class="col-12 col-md-auto d-flex gap-2 flex-wrap">
+                        <button type="submit" class="btn btn-outline-light w-100 w-md-auto">Filter</button>
 
-                        <a class="btn btn-success"
+                        <a class="btn btn-success w-100 w-md-auto"
                             asp-page="Export"
                             asp-route-SearchString="@Model.SearchString"
                             asp-route-MovieGenre="@Model.MovieGenre"
@@ -83,7 +84,7 @@
                             Export All
                             </a>
 
-                            <a class="btn btn-warning"
+                            <a class="btn btn-warning w-100 w-md-auto"
                             asp-page="Export"
                             asp-route-SearchString="@Model.SearchString"
                             asp-route-MovieGenre="@Model.MovieGenre"
@@ -98,7 +99,7 @@
                 </form>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-dark">
+                    <table class="table table-bordered table-hover table-dark table-sm">
                         <thead>
                             <tr>
                                 <th>
@@ -184,7 +185,7 @@
                 </div>
 
                 <nav aria-label="Page navigation" class="mt-4">
-                    <ul class="pagination justify-content-center">
+                    <ul class="pagination justify-content-center table-sm">
                         <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
                             <a class="page-link"
                                asp-page="./Index"
