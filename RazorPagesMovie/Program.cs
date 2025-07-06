@@ -3,6 +3,7 @@ using RazorPagesMovie.Data;
 using RazorPagesMovie.Models;
 using OfficeOpenXml;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace RazorPagesMovie
@@ -87,6 +88,16 @@ namespace RazorPagesMovie
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.Use(async (context, next) =>
+        {
+            if (context.User.Identity.IsAuthenticated)
+            {
+                await context.SignOutAsync();
+            }
+            await next();
+        });
+
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
