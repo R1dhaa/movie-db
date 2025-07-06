@@ -15,14 +15,27 @@ namespace RazorPagesMovie
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             builder.Services.AddRazorPages();
+                 var movieDbConnection = builder.Configuration.GetConnectionString("RazorPagesMovieContext");
+            if (string.IsNullOrEmpty(movieDbConnection) || movieDbConnection.Contains("Server="))
+            {
+                // fallback to SQLite file
+                var dbPath = Path.Combine(builder.Environment.ContentRootPath, "RazorPagesMovie.db");
+                movieDbConnection = $"Data Source={dbPath}";
+            }
+
             builder.Services.AddDbContext<RazorPagesMovieContext>(options =>
-                options.UseSqlite(builder.Configuration.GetConnectionString("RazorPagesMovieContext")
-                    ?? throw new InvalidOperationException("Connection string 'RazorPagesMovieContext' not found.")));
+                options.UseSqlite(movieDbConnection));
+
+            // Fix ApplicationDbContext connection string for SQLite
+            var identityDbConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+            if (string.IsNullOrEmpty(identityDbConnection) || identityDbConnection.Contains("Server="))
+            {
+                var identityDbPath = Path.Combine(builder.Environment.ContentRootPath, "Identity.db");
+                identityDbConnection = $"Data Source={identityDbPath}";
+            }
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")
-                    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.")));
-
+                options.UseSqlite(identityDbConnection));
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 6;
