@@ -532,8 +532,6 @@ C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\compressed\7m4z
 C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\compressed\5lal37o507-muycvpuwrr.gz
 C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\compressed\72jap2s390-87fc7y1x7t.gz
 C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\compressed\7oynjc2xn6-mlv21k5csn.gz
-C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\compressed\cjkl12c2vw-ghv2vixiuw.gz
-C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\compressed\i3ecga1hwg-ghv2vixiuw.gz
 C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\staticwebassets.development.json
@@ -556,3 +554,5 @@ C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\scriptc
 C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\scriptcs_bin\Debug\net9.0\RazorPagesMovie.runtimeconfig.json
 C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\scriptcs_bin\Debug\net9.0\RazorPagesMovie.staticwebassets.endpoints.json
 C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\bin\Debug\net9.0\publish\scriptcs_bin\Debug\net9.0\RazorPagesMovie.staticwebassets.runtime.json
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\compressed\cjkl12c2vw-383ajcf68y.gz
+C:\Users\fatma\Desktop\movie-db\RazorPagesMovie\obj\Debug\net9.0\compressed\i3ecga1hwg-383ajcf68y.gz
